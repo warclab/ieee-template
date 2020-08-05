@@ -2,6 +2,12 @@
 
 LaTeX Template for IEEE Transactions Format
 
+## Quick Start
+
+```bash
+make setup
+```
+
 ## How to use this repo
 
 You can click `use as template` to fork this repo to your own GitHub account and edit it as if it is your own.
