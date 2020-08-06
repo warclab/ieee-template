@@ -12,21 +12,27 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: root.tex
-      - name: Bump version and push tag
-        id: tags
-        uses: anothrNick/github-tag-action@1.17.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          RELEASE_BRANCHES: release 
+#       - name: Bump version and push tag
+#         id: tags
+#         uses: anothrNick/github-tag-action@1.17.2
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           WITH_V: true
+#           RELEASE_BRANCHES: release 
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.tags.outputs.tag }}_draft
-          release_name: ${{ steps.tags.outputs.tag }}_draft
+          tag_name: ${{ sha_short }}_draft
+          release_name: ${{ sha_short }}_draft
           draft: false
           prerelease: true
       - name: Upload Release Asset
@@ -37,7 +43,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./root.pdf
-          asset_name: ${{ steps.tags.outputs.tag }}_draft.pdf
+          asset_name: ${{ sha_short }}_draft.pdf
           asset_content_type: application/pdf
 
 
