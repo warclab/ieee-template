@@ -1,5 +1,6 @@
-name: "Workflow"
-push:
+name: TODO Issues
+on:
+  push:
     branches: [ draft ]
 jobs:
   build:
