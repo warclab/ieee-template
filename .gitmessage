@@ -4,5 +4,5 @@ A body which may contain several paragraphs.
 
 It must contain footers separated by a newline
 
-Change-type: major|minor|patch
+Change-type: #major|#minor|#patch
 Signed-off-by: Author <author@university.ac.uk>
